@@ -46,16 +46,16 @@ resource "aws_iam_role_policy" "ecs_task_execution_policy" {
         Action = [
           # ========== CLOUDWATCH LOGS ==========
           # Permissões para criar e escrever logs no CloudWatch
-          "logs:CreateLogStream",   # Criar stream de logs
-          "logs:PutLogEvents",     # Enviar eventos de log
-          "logs:CreateLogGroup",   # Criar grupo de logs
+          "logs:CreateLogStream", # Criar stream de logs
+          "logs:PutLogEvents",    # Enviar eventos de log
+          "logs:CreateLogGroup",  # Criar grupo de logs
 
           # ========== ELASTIC CONTAINER REGISTRY (ECR) ==========
           # Permissões para acessar imagens Docker no ECR
-          "ecr:GetAuthorizationToken",        # Obter token de autenticação
-          "ecr:BatchCheckLayerAvailability",  # Verificar disponibilidade de layers
-          "ecr:GetDownloadUrlForLayer",       # Obter URL para download de layers
-          "ecr:BatchGetImage",                # Baixar imagens do repositório
+          "ecr:GetAuthorizationToken",       # Obter token de autenticação
+          "ecr:BatchCheckLayerAvailability", # Verificar disponibilidade de layers
+          "ecr:GetDownloadUrlForLayer",      # Obter URL para download de layers
+          "ecr:BatchGetImage",               # Baixar imagens do repositório
 
           # ========== AMAZON S3 ==========
           # Permissão para ler objetos do S3 (se necessário)

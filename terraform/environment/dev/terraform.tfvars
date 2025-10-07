@@ -90,17 +90,106 @@ capabilities = ["EC2"]
 
 service_healthcheck = {
   # Número de checks consecutivos bem-sucedidos para considerar healthy
-  health_threshold   = 3
+  health_threshold = 3
   # Número de checks consecutivos falhados para considerar unhealthy
   unhealth_threshold = 10
   # Timeout em segundos para cada health check
-  timeout            = 10
+  timeout = 10
   # Intervalo em segundos entre health checks
-  interval           = 60
+  interval = 60
   # Códigos de resposta HTTP considerados como success
-  matcher            = "200-399"
+  matcher = "200-399"
   # Caminho da API que será chamada para o health check
-  path               = "/healthcheck"
+  path = "/healthcheck"
   # Porta onde o health check será feito (mesma porta da aplicação)
-  port               = 8080
+  port = 8080
 }
+
+# ========== CONFIGURAÇÕES DE AUTOSCALING ==========
+# Configurações para escalonamento automático do serviço ECS
+# O autoscaling permite que o número de tasks varie automaticamente
+# baseado em métricas como CPU, memória ou custom metrics
+
+# Tipo de escalonamento automático
+# Opções: "cpu_tracking", "cpu"
+scale_type = "cpu_tracking"
+
+# ========== LIMITES DE ESCALONAMENTO ==========
+
+# Número mínimo de tasks que devem estar sempre rodando
+# Garante disponibilidade mínima mesmo com baixa utilização
+task_minimum = 3
+
+# Número máximo de tasks que podem ser criadas
+# Evita custos excessivos e limita o crescimento do serviço
+task_maximum = 12
+
+# ========== CONFIGURAÇÕES DE SCALE OUT (EXPANSÃO) ==========
+# Parâmetros para quando o serviço precisa aumentar o número de tasks
+
+# Threshold de CPU em % que dispara o scale out
+# Quando a CPU média passar de 50%, novas tasks serão criadas
+scale_out_cpu_threshold = 50
+
+# Número de tasks a serem adicionadas quando o scale out é acionado
+# Valor positivo indica quantas tasks serão adicionadas
+scale_out_adjustment = 2
+
+# Operador de comparação para o threshold de scale out
+# "GreaterThanOrEqualToThreshold" = maior ou igual ao threshold
+scale_out_comparison_operator = "GreaterThanOrEqualToThreshold"
+
+# Tipo de estatística usada para calcular a métrica
+# "Average" = média da CPU durante o período
+scale_out_statistic = "Average"
+
+# Período em segundos para avaliar a métrica
+# 60 segundos = avalia a CPU média a cada 1 minuto
+scale_out_period = 60
+
+# Número de períodos consecutivos que a condição deve ser verdadeira
+# 2 períodos = a condição deve ser verdadeira por 2 minutos consecutivos
+scale_out_evaluation_periods = 2
+
+# Tempo de cooldown em segundos após um scale out
+# 60 segundos = aguarda 1 minuto antes de permitir outro scale out
+scale_out_cooldown = 60
+
+# ========== CONFIGURAÇÕES DE SCALE IN (REDUÇÃO) ==========
+# Parâmetros para quando o serviço precisa diminuir o número de tasks
+
+# Threshold de CPU em % que dispara o scale in
+# Quando a CPU média ficar abaixo de 30%, tasks serão removidas
+scale_in_cpu_threshold = 30
+
+# Número de tasks a serem removidas quando o scale in é acionado
+# Valor negativo indica quantas tasks serão removidas
+scale_in_adjustment = -1
+
+# Operador de comparação para o threshold de scale in
+# "LessThanOrEqualToThreshold" = menor ou igual ao threshold
+scale_in_comparison_operator = "LessThanOrEqualToThreshold"
+
+# Tipo de estatística usada para calcular a métrica
+# "Average" = média da CPU durante o período
+scale_in_statistic = "Average"
+
+# Período em segundos para avaliar a métrica
+# 60 segundos = avalia a CPU média a cada 1 minuto
+scale_in_period = 60
+
+# Número de períodos consecutivos que a condição deve ser verdadeira
+# 2 períodos = a condição deve ser verdadeira por 2 minutos consecutivos
+scale_in_evaluation_periods = 2
+
+# Tempo de cooldown em segundos após um scale in
+# 60 segundos = aguarda 1 minuto antes de permitir outro scale in
+scale_in_cooldown = 60
+
+# ========== CONFIGURAÇÃO DE TARGET TRACKING ==========
+# Configuração para Target Tracking Scaling Policy
+# Mantém automaticamente a utilização de CPU próxima ao valor alvo
+
+# Valor alvo de utilização de CPU em %
+# O autoscaling tentará manter a CPU média próxima a 50%
+scale_tracking_cpu = 50
