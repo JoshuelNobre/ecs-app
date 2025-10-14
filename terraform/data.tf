@@ -14,6 +14,12 @@ data "aws_ssm_parameter" "vpc_id" {
 
 # Busca o ARN do listener do Application Load Balancer
 # O ALB foi criado pela infraestrutura de rede/cluster
+data "aws_ssm_parameter" "alb" {
+  name = var.ssm_alb
+}
+
+# Busca o ARN do listener do Application Load Balancer
+# O ALB foi criado pela infraestrutura de rede/cluster
 data "aws_ssm_parameter" "listener" {
   name = var.ssm_listener
 }

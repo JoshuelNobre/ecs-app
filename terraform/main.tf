@@ -80,8 +80,8 @@ module "service" {
 
   # ========== LIMITES DE ESCALONAMENTO ==========
   # Define os limites mínimo e máximo de tasks para o autoscaling
-  task_minimum = var.task_minimum  # Número mínimo de tasks sempre rodando
-  task_maximum = var.task_maximum  # Número máximo de tasks permitidas
+  task_minimum = var.task_minimum # Número mínimo de tasks sempre rodando
+  task_maximum = var.task_maximum # Número máximo de tasks permitidas
 
   # ========== CONFIGURAÇÕES DE SCALE OUT (EXPANSÃO) ==========
   # Parâmetros para quando o serviço precisa aumentar o número de tasks
@@ -105,5 +105,9 @@ module "service" {
 
   # ========== TARGET TRACKING SCALING ==========
   # Configuração para manter a utilização de CPU próxima ao valor alvo
-  scale_tracking_cpu = var.scale_tracking_cpu  # CPU alvo em %
+  scale_tracking_cpu = var.scale_tracking_cpu # CPU alvo em %
+
+  #
+  alb_arn                 = data.aws_ssm_parameter.alb.value
+  scale_tracking_requests = var.scale_tracking_requests
 }

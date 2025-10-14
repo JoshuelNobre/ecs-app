@@ -12,8 +12,12 @@ variable "service_memory" {}
 
 variable "service_healthcheck" {}
 
-variable "service_launch_type" {}
-
+variable "service_launch_type" {
+  type    = list(object({
+    capacity_provider = string
+    weight            = number
+  }))
+}
 variable "service_task_count" {}
 
 variable "service_hosts" {}
@@ -27,6 +31,8 @@ variable "ssm_private_subnet_1" {}
 variable "ssm_private_subnet_2" {}
 
 variable "ssm_private_subnet_3" {}
+
+variable "ssm_alb" {}
 
 variable "environment_variables" {}
 
@@ -153,3 +159,7 @@ variable "scale_tracking_cpu" {
   description = "Valor alvo de utilização de CPU em % para target tracking scaling"
   type        = number
 }
+
+
+#Tracking Requests
+variable "scale_tracking_requests" {}

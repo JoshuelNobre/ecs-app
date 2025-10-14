@@ -35,7 +35,16 @@ service_memory = 512
 # Tipo de launch para as tasks
 # EC2: executa em instâncias EC2 gerenciadas por você
 # FARGATE: serverless, AWS gerencia a infraestrutura
-service_launch_type = "EC2"
+service_launch_type = [
+  {
+    capacity_provider = "FARGATE"
+    weight            = 50
+  },
+  {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 50
+  }
+]
 
 # Número de tasks que devem estar rodando simultaneamente
 # Para desenvolvimento, 3 tasks oferecem boa disponibilidade
@@ -57,6 +66,7 @@ ssm_private_subnet_1 = "/linuxtips-vpc/vpc/private_subnet_1a"
 ssm_private_subnet_2 = "/linuxtips-vpc/vpc/private_subnet_1b"
 ssm_private_subnet_3 = "/linuxtips-vpc/vpc/private_subnet_1c"
 
+ssm_alb = "/linuxtips/ecs/lb/id"
 # ========== CONFIGURAÇÕES DO LOAD BALANCER ==========
 
 # Lista de hosts/domínios que serão roteados para este serviço
@@ -111,7 +121,7 @@ service_healthcheck = {
 # baseado em métricas como CPU, memória ou custom metrics
 
 # Tipo de escalonamento automático
-# Opções: "cpu_tracking", "cpu"
+# Opções: "cpu_tracking", "cpu", "requests_tracking"
 scale_type = "cpu_tracking"
 
 # ========== LIMITES DE ESCALONAMENTO ==========
@@ -193,3 +203,5 @@ scale_in_cooldown = 60
 # Valor alvo de utilização de CPU em %
 # O autoscaling tentará manter a CPU média próxima a 50%
 scale_tracking_cpu = 50
+
+scale_tracking_requests = 50
