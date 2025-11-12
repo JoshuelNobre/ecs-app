@@ -6,7 +6,7 @@ set -e
 export AWS_ACCOUNT="550094086634"
 export AWS_PAGER=""
 export APP_NAME="linuxtips-app"
-export CLUSTER_NAME="linuxtips-ecs-cluster"
+export CLUSTER_NAME="linux-tips-ecs-cluster"
 # export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 export BRANCH_NAME="dev"
 
@@ -46,8 +46,7 @@ cd ../app
 
 echo "BUILD - BUMP DE VERSAO"
 
-# GIT_COMMIT_HASH=$(git rev-parse --short HEAD)
-GIT_COMMIT_HASH="v1.0.$(date +%Y%m%d%H%M%S)"
+GIT_COMMIT_HASH=$(git rev-parse --short HEAD)
 echo $GIT_COMMIT_HASH
 
 echo "BUILD - LOGIN NO ECR"

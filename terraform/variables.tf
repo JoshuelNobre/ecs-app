@@ -4,6 +4,8 @@ variable "cluster_name" {}
 
 variable "service_name" {}
 
+variable "container_image" {}
+
 variable "service_port" {}
 
 variable "service_cpu" {}

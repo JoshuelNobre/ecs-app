@@ -17,6 +17,9 @@ module "service" {
   # Região AWS onde os recursos serão criados
   region = var.region
 
+  # Container image URI
+  container_image = var.container_image
+
   # Nome do cluster ECS existente onde o serviço será deployed
   cluster_name = var.cluster_name
 

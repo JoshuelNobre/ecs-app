@@ -15,7 +15,7 @@ cluster_name = "linux-tips-ecs-cluster"
 
 # Nome do serviço que será criado
 # Este nome será usado para nomear todos os recursos relacionados
-service_name = "chip"
+service_name = "linuxtips-app"
 
 # ========== CONFIGURAÇÕES DO CONTAINER ==========
 
@@ -72,7 +72,7 @@ ssm_alb = "/linuxtips/ecs/lb/id"
 # Lista de hosts/domínios que serão roteados para este serviço
 # O Application Load Balancer usará esses hosts para routing
 service_hosts = [
-  "joshuel.com.br"
+  "app.linuxtips.demo"
 ]
 
 # ========== VARIÁVEIS DE AMBIENTE ==========
