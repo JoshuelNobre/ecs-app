@@ -13,7 +13,7 @@ variable "service_memory" {}
 variable "service_healthcheck" {}
 
 variable "service_launch_type" {
-  type    = list(object({
+  type = list(object({
     capacity_provider = string
     weight            = number
   }))
