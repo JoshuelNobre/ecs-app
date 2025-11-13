@@ -110,6 +110,7 @@ terraform plan -var-file=environment/$BRANCH_NAME/terraform.tfvars -var containe
 
 echo "DEPLOY - TERRAFORM APPLY"
 terraform apply --auto-approve -var-file=environment/$BRANCH_NAME/terraform.tfvars -var container_image=$REPOSITORY_TAG
+# terraform destroy --auto-approve -var-file=environment/$BRANCH_NAME/terraform.tfvars -var container_image=$REPOSITORY_TAG
 
 echo "DEPLOY - WAIT DEPLOY"
 
