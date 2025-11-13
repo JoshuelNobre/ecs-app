@@ -9,7 +9,7 @@ env:
   AWS_ACCOUNT: "550094086634"
   AWS_REGION: "us-east-1"
   APP_NAME: "linuxtips-app"
-  CLUSTER_NAME: "linuxtips-ecs-cluster"
+  CLUSTER_NAME: "linux-tips-ecs-cluster"
   REPOSITORY_NAME: "linuxtips/$APP_NAME"
 
 jobs:
