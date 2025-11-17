@@ -71,7 +71,11 @@ module "service" {
     },
     {
       name      = "VARIAVEL_COM_VALOR_DO_SECRETS_MANAGER"
-      valueFrom = aws_secretsmanager_secret.teste.arn
+      valueFrom = "aws_secretsmanager_secret.teste.arn"
+    },
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SECRETS_MANAGER_2"
+      valueFrom = "prod/teste/credenciaisi"
     }
   ]
 
