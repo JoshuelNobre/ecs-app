@@ -11,7 +11,8 @@
 
 module "service" {
   # Caminho para o módulo local do ECS Service
-  source = "github.com/JoshuelNobre/ecs-service-module?ref=v1"
+  # source = "github.com/JoshuelNobre/ecs-service-module?ref=v1"
+  source = "/home/joshuel/estudo-ecs/ecs-service-module"
 
   # ========== CONFIGURAÇÕES BÁSICAS ==========
   # Região AWS onde os recursos serão criados
@@ -72,6 +73,16 @@ module "service" {
     data.aws_ssm_parameter.private_subnet_1.value,
     data.aws_ssm_parameter.private_subnet_2.value,
     data.aws_ssm_parameter.private_subnet_3.value,
+  ]
+
+  efs_volumes = [
+    {
+      volume_name      = "efs-volume"
+      file_system_id   = aws_efs_file_system.main.id
+      file_system_root = "/"
+      mount_point      = "/mnt/efs"
+      read_only        = false
+    }
   ]
 
   # ========== CONFIGURAÇÕES DE AUTOSCALING ==========
