@@ -11,8 +11,8 @@
 
 module "service" {
   # Caminho para o módulo local do ECS Service
-  source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.1.0"
-  # source = "/home/joshuel/estudo-ecs/ecs-service-module"
+  # source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.1.0"
+  source = "/home/joshuel/estudo-ecs/ecs-service-module"
 
   # ========== CONFIGURAÇÕES BÁSICAS ==========
   # Região AWS onde os recursos serão criados
@@ -63,6 +63,13 @@ module "service" {
   # ========== VARIÁVEIS DE AMBIENTE ==========
   # Lista de variáveis de ambiente para o container
   environment_variables = var.environment_variables
+
+  secrets = [
+    {
+      name      = "VARIAVEL_COM_VALOR_DO_SSM"
+      valueFrom = aws_ssm_parameter.teste.arn
+    }
+  ]
 
   # ========== CONFIGURAÇÕES DE REDE ==========
   # VPC ID onde os recursos serão criados (obtido do SSM)

@@ -13,7 +13,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/version", func(c *fiber.Ctx) error {
-		return c.SendString("v8")
+		return c.SendString("v7")
 	})
 
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
@@ -93,6 +93,10 @@ func main() {
 		}
 
 		return c.SendString(string(content))
+	})
+
+	app.Get("/printenv", func(c *fiber.Ctx) error {
+		return c.JSON(os.Environ())
 	})
 
 	_ = app.Listen(":8080")
