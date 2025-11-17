@@ -71,11 +71,15 @@ module "service" {
     },
     {
       name      = "VARIAVEL_COM_VALOR_DO_SECRETS_MANAGER"
-      valueFrom = "aws_secretsmanager_secret.teste.arn"
+      valueFrom = aws_secretsmanager_secret.teste.arn
     },
     {
-      name      = "VARIAVEL_COM_VALOR_DO_SECRETS_MANAGER_2"
-      valueFrom = "prod/teste/credenciaisi"
+      name      = "VARIAVEL_PERSONALIZADA"
+      valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:prod/teste/credenciaisi-bblILI"
+    },
+    {
+      name      = "VARIAVEL_PERSONALIZADA_DO_BANCO"
+      valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:prod/postgresql-DspohE"
     }
   ]
 
