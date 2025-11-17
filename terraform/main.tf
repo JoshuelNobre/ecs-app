@@ -11,8 +11,8 @@
 
 module "service" {
   # Caminho para o módulo local do ECS Service
-  # source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.1.0"
-  source = "/home/joshuel/estudo-ecs/ecs-service-module"
+  source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.2.0"
+  # source = "/home/joshuel/estudo-ecs/ecs-service-module"
 
   # ========== CONFIGURAÇÕES BÁSICAS ==========
   # Região AWS onde os recursos serão criados
@@ -72,15 +72,19 @@ module "service" {
     {
       name      = "VARIAVEL_COM_VALOR_DO_SECRETS_MANAGER"
       valueFrom = aws_secretsmanager_secret.teste.arn
-    },
-    {
-      name      = "VARIAVEL_PERSONALIZADA"
-      valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:prod/teste/credenciaisi-bblILI"
-    },
-    {
-      name      = "VARIAVEL_PERSONALIZADA_DO_BANCO"
-      valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:prod/postgresql-DspohE"
     }
+    # {
+    #   name      = "APENAS_UM_TESTE"
+    #   valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:teste/db-FcwG7Q"
+    # },
+    # {
+    #   name      = "DB_HOST"
+    #   valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:teste/db-FcwG7Q:host::"
+    # },
+    # {
+    #   name      = "DB_USER"
+    #   valueFrom = "arn:aws:secretsmanager:us-east-1:550094086634:secret:teste/db-FcwG7Q:username::"
+    # }
   ]
 
   # ========== CONFIGURAÇÕES DE REDE ==========

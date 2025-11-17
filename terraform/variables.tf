@@ -1,18 +1,37 @@
-variable "region" {}
+variable "region" {
+  type        = string
+  description = "Região da AWS onde os recursos serão provisionados."
+}
 
-variable "cluster_name" {}
+variable "cluster_name" {
+  type        = string
+  description = "Nome do cluster ECS que hospedará o serviço."
+}
 
-variable "service_name" {}
+variable "service_name" {
+  type        = string
+  description = "Nome do serviço que será usado dentro do cluster."
+}
 
-variable "container_image" {}
+variable "service_port" {
+  type        = number
+  description = "Porta TCP na qual o serviço aceitará tráfego."
+}
 
-variable "service_port" {}
+variable "service_cpu" {
+  type        = number
+  description = "Quantidade de CPU reservada para o serviço, em unidades definidas pela AWS."
+}
 
-variable "service_cpu" {}
+variable "service_memory" {
+  type        = number
+  description = "Quantidade de memória reservada para o serviço, em megabytes."
+}
 
-variable "service_memory" {}
-
-variable "service_healthcheck" {}
+variable "service_healthcheck" {
+  type        = map(any)
+  description = "Configurações do health check para o serviço, como caminho e protocolo."
+}
 
 variable "service_launch_type" {
   type = list(object({
@@ -20,148 +39,99 @@ variable "service_launch_type" {
     weight            = number
   }))
 }
-variable "service_task_count" {}
 
-variable "service_hosts" {}
 
-variable "ssm_vpc_id" {}
+variable "container_image" {}
 
-variable "ssm_listener" {}
-
-variable "ssm_private_subnet_1" {}
-
-variable "ssm_private_subnet_2" {}
-
-variable "ssm_private_subnet_3" {}
-
-variable "ssm_alb" {}
-
-variable "environment_variables" {}
-
-# Capacidades requeridas para a task definition
-variable "capabilities" {
-  description = "Lista de capacidades requeridas (EC2, FARGATE, etc.)"
+variable "service_hosts" {
   type        = list(string)
+  description = "Lista de endereços ou nomes de host atribuídos ao serviço para balanceamento de carga ou exposição."
 }
 
-# ========== CONFIGURAÇÕES DE AUTOSCALING ==========
+variable "service_task_count" {
+  type        = number
+  description = "Número de tarefas que o serviço deve manter em execução simultaneamente."
+}
 
-# Tipo de escalonamento automático
-variable "scale_type" {
-  description = "Tipo de autoscaling (cpu_tracking, cpu)"
+variable "ssm_vpc_id" {
   type        = string
+  description = "ID do VPC armazenado no AWS Systems Manager (SSM) onde o serviço será implantado."
 }
 
-# ========== LIMITES DE ESCALONAMENTO ==========
-
-# Número mínimo de tasks
-variable "task_minimum" {
-  description = "Número mínimo de tasks que devem estar sempre rodando"
-  type        = number
-}
-
-# Número máximo de tasks
-variable "task_maximum" {
-  description = "Número máximo de tasks que podem ser criadas"
-  type        = number
-}
-
-# ========== CONFIGURAÇÕES DE SCALE OUT (EXPANSÃO) ==========
-
-# Threshold de CPU para scale out
-variable "scale_out_cpu_threshold" {
-  description = "Threshold de CPU em % que dispara o scale out"
-  type        = number
-}
-
-# Ajuste do scale out
-variable "scale_out_adjustment" {
-  description = "Número de tasks a serem adicionadas no scale out"
-  type        = number
-}
-
-# Operador de comparação para scale out
-variable "scale_out_comparison_operator" {
-  description = "Operador de comparação para o threshold de scale out"
+variable "ssm_listener" {
   type        = string
+  description = "ARN do listener de um Application Load Balancer (ALB), armazenado no AWS SSM, que será usado pelo serviço."
 }
 
-# Estatística para scale out
-variable "scale_out_statistic" {
-  description = "Tipo de estatística usada para calcular a métrica (Average, Sum, etc.)"
+variable "ssm_private_subnet_1" {
   type        = string
+  description = "ID da primeira subnet privada, armazenado no AWS SSM, onde o serviço será implantado."
 }
 
-# Período de avaliação para scale out
-variable "scale_out_period" {
-  description = "Período em segundos para avaliar a métrica de scale out"
-  type        = number
-}
-
-# Períodos de avaliação para scale out
-variable "scale_out_evaluation_periods" {
-  description = "Número de períodos consecutivos para acionar scale out"
-  type        = number
-}
-
-# Cooldown para scale out
-variable "scale_out_cooldown" {
-  description = "Tempo de cooldown em segundos após um scale out"
-  type        = number
-}
-
-# ========== CONFIGURAÇÕES DE SCALE IN (REDUÇÃO) ==========
-
-# Threshold de CPU para scale in
-variable "scale_in_cpu_threshold" {
-  description = "Threshold de CPU em % que dispara o scale in"
-  type        = number
-}
-
-# Ajuste do scale in
-variable "scale_in_adjustment" {
-  description = "Número de tasks a serem removidas no scale in (valor negativo)"
-  type        = number
-}
-
-# Operador de comparação para scale in
-variable "scale_in_comparison_operator" {
-  description = "Operador de comparação para o threshold de scale in"
+variable "ssm_private_subnet_2" {
   type        = string
+  description = "ID da segunda subnet privada, armazenado no AWS SSM, para implantação do serviço."
 }
 
-# Estatística para scale in
-variable "scale_in_statistic" {
-  description = "Tipo de estatística usada para calcular a métrica (Average, Sum, etc.)"
+variable "ssm_private_subnet_3" {
   type        = string
+  description = "ID da terceira subnet privada, armazenado no AWS SSM, usada para implantação do serviço."
 }
 
-# Período de avaliação para scale in
-variable "scale_in_period" {
-  description = "Período em segundos para avaliar a métrica de scale in"
-  type        = number
+variable "ssm_alb" {
+  type        = string
+  description = ""
 }
 
-# Períodos de avaliação para scale in
-variable "scale_in_evaluation_periods" {
-  description = "Número de períodos consecutivos para acionar scale in"
-  type        = number
+variable "environment_variables" {
+  type        = list(map(string))
+  description = "Lista de variáveis de ambiente que serão passadas às tarefas do serviço."
 }
 
-# Cooldown para scale in
-variable "scale_in_cooldown" {
-  description = "Tempo de cooldown em segundos após um scale in"
-  type        = number
+variable "capabilities" {
+  type        = list(string)
+  description = "Lista de capacidades especiais necessárias para o serviço, como 'SYS_ADMIN' para determinados privilégios de sistema."
 }
 
-# ========== CONFIGURAÇÕES DE TARGET TRACKING ==========
+variable "scale_type" {}
 
-# CPU alvo para target tracking
-variable "scale_tracking_cpu" {
-  description = "Valor alvo de utilização de CPU em % para target tracking scaling"
-  type        = number
-}
+variable "task_minimum" {}
+
+variable "task_maximum" {}
+
+### Autoscaling de CPU
+
+variable "scale_out_cpu_threshold" {}
+
+variable "scale_out_adjustment" {}
+
+variable "scale_out_comparison_operator" {}
+
+variable "scale_out_statistic" {}
+
+variable "scale_out_period" {}
+
+variable "scale_out_evaluation_periods" {}
+
+variable "scale_out_cooldown" {}
+
+variable "scale_in_cpu_threshold" {}
+
+variable "scale_in_adjustment" {}
+
+variable "scale_in_comparison_operator" {}
+
+variable "scale_in_statistic" {}
+
+variable "scale_in_period" {}
+
+variable "scale_in_evaluation_periods" {}
+
+variable "scale_in_cooldown" {}
+
+### Tracking CPU
+variable "scale_tracking_cpu" {}
 
 
-#Tracking Requests
+### Tracking Requests
 variable "scale_tracking_requests" {}
