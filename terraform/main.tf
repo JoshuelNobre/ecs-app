@@ -11,8 +11,8 @@
 
 module "service" {
   # Caminho para o módulo local do ECS Service
-  # source = "github.com/JoshuelNobre/ecs-service-module?ref=v1"
-  source = "/home/joshuel/estudo-ecs/ecs-service-module"
+  source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.1.0"
+  # source = "/home/joshuel/estudo-ecs/ecs-service-module"
 
   # ========== CONFIGURAÇÕES BÁSICAS ==========
   # Região AWS onde os recursos serão criados
