@@ -11,8 +11,8 @@
 
 module "service" {
   # Caminho para o módulo local do ECS Service
-  source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.2.0"
-  # source = "/home/joshuel/estudo-ecs/ecs-service-module"
+  # source = "github.com/JoshuelNobre/ecs-service-module?ref=v1.2.0"
+  source = "/home/joshu/curso-ecs/ecs-service-module"
 
   # ========== CONFIGURAÇÕES BÁSICAS ==========
   # Região AWS onde os recursos serão criados
@@ -147,4 +147,6 @@ module "service" {
   #
   alb_arn                 = data.aws_ssm_parameter.alb.value
   scale_tracking_requests = var.scale_tracking_requests
+
+  service_discovery_namespace = data.aws_ssm_parameter.service_discovery_namespace.value
 }

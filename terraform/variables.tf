@@ -135,3 +135,8 @@ variable "scale_tracking_cpu" {}
 
 ### Tracking Requests
 variable "scale_tracking_requests" {}
+
+### Service Discovery Namespace
+variable "ssm_service_discovery_namespace" {
+  default = null
+}

@@ -58,7 +58,11 @@ service_task_count = 3
 ssm_vpc_id = "/linuxtips-vpc/vpc/vpc_id"
 
 # Parâmetro que contém o ARN do listener do Application Load Balancer
-ssm_listener = "/linuxtips/ecs/lb/listener"
+# ssm_listener = "/linuxtips/ecs/lb/listener"
+# ssm_alb = "/linuxtips/ecs/lb/id"
+
+ssm_listener = "/linuxtips/ecs/lb/internal/listener"
+ssm_alb      = "/linuxtips/ecs/lb/internal/id"
 
 # Parâmetros que contêm os IDs das subnets privadas
 # As tasks serão distribuídas entre essas 3 subnets para alta disponibilidade
@@ -66,13 +70,12 @@ ssm_private_subnet_1 = "/linuxtips-vpc/vpc/private_subnet_1a"
 ssm_private_subnet_2 = "/linuxtips-vpc/vpc/private_subnet_1b"
 ssm_private_subnet_3 = "/linuxtips-vpc/vpc/private_subnet_1c"
 
-ssm_alb = "/linuxtips/ecs/lb/id"
 # ========== CONFIGURAÇÕES DO LOAD BALANCER ==========
-
 # Lista de hosts/domínios que serão roteados para este serviço
 # O Application Load Balancer usará esses hosts para routing
 service_hosts = [
-  "app.linuxtips.demo"
+  #  "app.linuxtips.demo",
+  "app.linux-tips-ecs-cluster.internal.com"
 ]
 
 # ========== VARIÁVEIS DE AMBIENTE ==========
@@ -205,3 +208,5 @@ scale_in_cooldown = 60
 scale_tracking_cpu = 50
 
 scale_tracking_requests = 50
+
+ssm_service_discovery_namespace = "/linuxtips/ecs/cloudmap/namespace"
